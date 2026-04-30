@@ -1,10 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
-const portfolioEntries = await Astro.glob('../content/portfolio/*.md');
-const images = portfolioEntries
-	.map((entry) => ({
-		title: typeof entry.frontmatter.title === 'string' ? entry.frontmatter.title : 'Photo',
-		image: typeof entry.frontmatter.image === 'string' ? entry.frontmatter.image : '',
+const portfolioModules = import.meta.glob('../content/portfolio/*.md', { eager: true });
+const images = Object.values(portfolioModules)
+	.map((entry: any) => ({
+		title: typeof entry.frontmatter?.title === 'string' ? entry.frontmatter.title : 'Photo',
+		image: typeof entry.frontmatter?.image === 'string' ? entry.frontmatter.image : '',
 	}))
 	.filter((entry) => entry.image.length > 0)
 	.sort((a, b) => a.title.localeCompare(b.title, 'fr'));
