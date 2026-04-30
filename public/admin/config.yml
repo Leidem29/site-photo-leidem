@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: Leidem29/site-photo-leidem
+  name: git-gateway
   branch: main
 
 media_folder: "public/images/uploads"
