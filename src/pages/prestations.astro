@@ -1,0 +1,118 @@
+---
+import Layout from '../layouts/Layout.astro';
+import prestationsContent from '../content/prestations.json';
+---
+
+<Layout>
+	<section class="services">
+		<h1>Prestations & Tarifs</h1>
+
+		<div class="cards-grid">
+			{prestationsContent.items.map((item) => (
+				<article class="service-card">
+					<h2>{item.name}</h2>
+					<p class="price">A partir de {item.startingPrice}</p>
+					<ul>
+						{item.features.map((feature) => (
+							<li>{feature}</li>
+						))}
+					</ul>
+				</article>
+			))}
+		</div>
+
+		<div class="cta-wrap">
+			<a class="cta-button" href="/contact">Reserver une seance</a>
+		</div>
+	</section>
+</Layout>
+
+<style>
+	.services {
+		max-width: 1120px;
+		margin: 0 auto;
+		padding: 9rem 1.5rem 7rem;
+	}
+
+	h1 {
+		margin: 0;
+		text-align: center;
+		font-size: clamp(2.2rem, 4.6vw, 4rem);
+		font-weight: 500;
+	}
+
+	.cards-grid {
+		margin-top: 4.5rem;
+		display: grid;
+		grid-template-columns: repeat(1, minmax(0, 1fr));
+		gap: 1.25rem;
+	}
+
+	.service-card {
+		background: #ffffff;
+		border: 1px solid #efefef;
+		padding: 2rem 1.8rem;
+	}
+
+	.service-card h2 {
+		margin: 0 0 0.8rem;
+		font-size: 1.6rem;
+	}
+
+	.price {
+		margin: 0 0 1.25rem;
+		font-size: 0.83rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: #555555;
+		font-family: 'Montserrat', 'Inter', sans-serif;
+		font-weight: 300;
+	}
+
+	ul {
+		margin: 0;
+		padding-left: 1.1rem;
+		color: #2d2d2d;
+	}
+
+	li {
+		margin: 0.45rem 0;
+		line-height: 1.75;
+	}
+
+	li::marker {
+		color: #b8b8b8;
+	}
+
+	.cta-wrap {
+		margin-top: 3.25rem;
+		display: flex;
+		justify-content: center;
+	}
+
+	.cta-button {
+		display: inline-block;
+		text-decoration: none;
+		border: 1px solid #1a1a1a;
+		color: #1a1a1a;
+		padding: 0.85rem 1.8rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		font-size: 0.77rem;
+		font-family: 'Montserrat', 'Inter', sans-serif;
+		font-weight: 300;
+		transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+	}
+
+	.cta-button:hover {
+		background: #1a1a1a;
+		color: #ffffff;
+		opacity: 0.92;
+	}
+
+	@media (min-width: 860px) {
+		.cards-grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+</style>

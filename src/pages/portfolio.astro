@@ -1,0 +1,188 @@
+---
+import Layout from '../layouts/Layout.astro';
+const portfolioEntries = await Astro.glob('../content/portfolio/*.md');
+const images = portfolioEntries
+	.map((entry) => ({
+		title: typeof entry.frontmatter.title === 'string' ? entry.frontmatter.title : 'Photo',
+		image: typeof entry.frontmatter.image === 'string' ? entry.frontmatter.image : '',
+	}))
+	.filter((entry) => entry.image.length > 0)
+	.sort((a, b) => a.title.localeCompare(b.title, 'fr'));
+---
+
+<Layout>
+	<section class="portfolio">
+		<div class="intro">
+			<h1>Portfolio</h1>
+			<p>Ajoutez ou supprimez les images depuis le CMS dans la collection Portfolio.</p>
+		</div>
+
+		{images.length > 0 ? (
+			<div class="masonry" id="masonry-gallery">
+				{images.map((item, index) => {
+					const src = item.image;
+					return (
+						<button
+							type="button"
+							class="photo-card"
+							data-full-src={src}
+							data-alt={item.title}
+							aria-label={`Ouvrir la photo ${index + 1}`}
+						>
+							<img src={src} alt={item.title} loading="lazy" decoding="async" />
+						</button>
+					);
+				})}
+			</div>
+		) : (
+			<p class="empty-state">
+				Aucune image detectee. Ajoutez des entrees dans la collection Portfolio du CMS.
+			</p>
+		)}
+	</section>
+
+	<dialog id="lightbox" class="lightbox">
+		<button class="close-button" type="button" aria-label="Fermer">&times;</button>
+		<img id="lightbox-image" src="" alt="" />
+	</dialog>
+</Layout>
+
+<script>
+	const gallery = document.getElementById('masonry-gallery');
+	const lightbox = document.getElementById('lightbox');
+	const lightboxImage = document.getElementById('lightbox-image');
+	const closeButton = lightbox?.querySelector('.close-button');
+
+	if (gallery instanceof HTMLElement && lightbox instanceof HTMLDialogElement && lightboxImage instanceof HTMLImageElement) {
+		gallery.addEventListener('click', (event) => {
+			const target = event.target;
+			if (!(target instanceof Element)) return;
+
+			const card = target.closest('.photo-card');
+			if (!(card instanceof HTMLButtonElement)) return;
+
+			const src = card.dataset.fullSrc ?? '';
+			const alt = card.dataset.alt ?? '';
+			if (!src) return;
+
+			lightboxImage.src = src;
+			lightboxImage.alt = alt;
+			lightbox.showModal();
+		});
+
+		closeButton?.addEventListener('click', () => {
+			lightbox.close();
+		});
+
+		lightbox.addEventListener('click', (event) => {
+			const target = event.target;
+			if (!(target instanceof Node)) return;
+
+			if (target === lightbox) {
+				lightbox.close();
+			}
+		});
+	}
+</script>
+
+<style>
+	.portfolio {
+		padding: 5rem 1.25rem 6rem;
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+
+	.intro {
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+
+	.intro h1 {
+		font-size: clamp(2rem, 4vw, 3.25rem);
+		margin: 0 0 0.8rem;
+	}
+
+	.intro p {
+		margin: 0;
+		color: #434343;
+	}
+
+	.masonry {
+		column-count: 1;
+		column-gap: 1rem;
+	}
+
+	.photo-card {
+		border: 0;
+		padding: 0;
+		width: 100%;
+		background: transparent;
+		margin: 0 0 1rem;
+		break-inside: avoid;
+		cursor: zoom-in;
+	}
+
+	.photo-card img {
+		display: block;
+		width: 100%;
+		height: auto;
+		filter: grayscale(6%);
+		transition: transform 0.25s ease, filter 0.25s ease;
+	}
+
+	.photo-card:hover img {
+		transform: translateY(-2px);
+		filter: grayscale(0%);
+	}
+
+	.empty-state {
+		text-align: center;
+		max-width: 680px;
+		margin: 3rem auto 0;
+		color: #575757;
+		line-height: 1.8;
+	}
+
+	.lightbox {
+		border: none;
+		padding: 0;
+		background: transparent;
+		max-width: min(92vw, 1200px);
+	}
+
+	.lightbox::backdrop {
+		background: rgba(10, 10, 10, 0.88);
+	}
+
+	.lightbox img {
+		display: block;
+		width: 100%;
+		height: auto;
+		max-height: 90vh;
+		object-fit: contain;
+	}
+
+	.close-button {
+		position: absolute;
+		top: -2.25rem;
+		right: 0;
+		border: 0;
+		background: transparent;
+		color: #ffffff;
+		font-size: 2rem;
+		cursor: pointer;
+		line-height: 1;
+	}
+
+	@media (min-width: 700px) {
+		.masonry {
+			column-count: 2;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.masonry {
+			column-count: 3;
+		}
+	}
+</style>

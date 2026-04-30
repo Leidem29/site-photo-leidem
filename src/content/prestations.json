@@ -1,0 +1,31 @@
+{
+  "items": [
+    {
+      "name": "Mariage",
+      "startingPrice": "1400 EUR",
+      "features": [
+        "Couverture de la journee",
+        "Galerie privee en ligne",
+        "Selection retouchee en haute definition"
+      ]
+    },
+    {
+      "name": "Portrait",
+      "startingPrice": "280 EUR",
+      "features": [
+        "Seance de 2h",
+        "Accompagnement avant la seance",
+        "Galerie privee en ligne"
+      ]
+    },
+    {
+      "name": "Famille & Grossesse",
+      "startingPrice": "320 EUR",
+      "features": [
+        "Seance en exterieur ou a domicile",
+        "Approche naturelle et guidee",
+        "Galerie privee en ligne"
+      ]
+    }
+  ]
+}

@@ -1,11 +1,110 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import homepageContent from '../content/homepage.json';
 ---
 
-<Layout>
-	<Welcome />
+<Layout overlayNav={true}>
+	<section class="hero">
+		<div class="hero-overlay">
+			<h1>{homepageContent.heroTitle}</h1>
+			<a href="#presentation" class="hero-button">{homepageContent.heroButtonLabel}</a>
+		</div>
+	</section>
+
+	<section id="presentation" class="presentation">
+		<div class="presentation-inner">
+			<img
+				class="profile-photo"
+				src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=420&q=80"
+				alt="Portrait de la photographe"
+				loading="lazy"
+				decoding="async"
+			/>
+			<h2>{homepageContent.presentationTitle}</h2>
+			<p>
+				{homepageContent.presentationParagraphs.map((line, index) => (
+					<>
+						{line}
+						{index < homepageContent.presentationParagraphs.length - 1 && <br />}
+					</>
+				))}
+			</p>
+		</div>
+	</section>
 </Layout>
+
+<style>
+	.hero {
+		min-height: 100vh;
+		position: relative;
+		background-image: linear-gradient(rgba(12, 12, 12, 0.25), rgba(12, 12, 12, 0.25)),
+			url('https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1800&q=80');
+		background-size: cover;
+		background-position: center;
+		display: grid;
+		place-items: center;
+	}
+
+	.hero-overlay {
+		text-align: center;
+		color: #ffffff;
+		padding: 1.5rem;
+	}
+
+	h1 {
+		font-size: clamp(2rem, 5vw, 4rem);
+		font-weight: 500;
+		letter-spacing: 0.05em;
+		margin: 0 0 2rem;
+	}
+
+	.hero-button {
+		display: inline-block;
+		text-decoration: none;
+		border: 1px solid rgba(255, 255, 255, 0.8);
+		color: #ffffff;
+		padding: 0.75rem 1.7rem;
+		font-size: 0.78rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		transition: background-color 0.2s ease, color 0.2s ease;
+	}
+
+	.hero-button:hover {
+		background: #ffffff;
+		color: #111111;
+	}
+
+	.presentation {
+		background: #ffffff;
+		padding: 9rem 1.5rem 10rem;
+	}
+
+	.presentation-inner {
+		max-width: 800px;
+		margin: 0 auto;
+		text-align: center;
+	}
+
+	.profile-photo {
+		display: block;
+		width: clamp(120px, 17vw, 170px);
+		aspect-ratio: 1;
+		object-fit: cover;
+		margin: 0 auto 2.25rem;
+		border-radius: 50%;
+		box-shadow: 0 16px 40px rgba(18, 18, 18, 0.14);
+	}
+
+	h2 {
+		font-size: clamp(2rem, 3.8vw, 3rem);
+		margin: 0 0 1.8rem;
+	}
+
+	p {
+		margin: 0;
+		font-size: clamp(1rem, 1.4vw, 1.15rem);
+		line-height: 2.15;
+		color: #2c2c2c;
+	}
+</style>

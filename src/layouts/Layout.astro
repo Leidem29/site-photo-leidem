@@ -1,23 +1,133 @@
+---
+interface Props {
+	overlayNav?: boolean;
+}
+
+const { overlayNav = false } = Astro.props;
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Montserrat:wght@200;300;400&family=Playfair+Display:wght@500;700&display=swap"
+			rel="stylesheet"
+		/>
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>Photo</title>
 	</head>
 	<body>
-		<slot />
+		<header class:list={['site-header', { 'site-header--overlay': overlayNav }]}>
+			<div class="header-inner">
+				<a href="/" class="brand">LEIDEM_foto</a>
+				<nav class="nav">
+					<a href="/">Accueil</a>
+					<a href="/portfolio">Portfolio</a>
+					<a href="/prestations">Prestations</a>
+					<a href="/contact">Contact</a>
+				</nav>
+			</div>
+		</header>
+		<main>
+			<slot />
+		</main>
 	</body>
 </html>
 
 <style>
-	html,
-	body {
+	:global(*) {
+		box-sizing: border-box;
+	}
+
+	:global(html),
+	:global(body) {
 		margin: 0;
 		width: 100%;
-		height: 100%;
+		min-height: 100%;
+		background: #fff;
+		color: #161616;
+		font-family: 'Inter', sans-serif;
+	}
+
+	.site-header {
+		position: sticky;
+		top: 0;
+		z-index: 50;
+		background: rgba(255, 255, 255, 0.92);
+		backdrop-filter: blur(6px);
+		border-bottom: 1px solid #eeeeee;
+	}
+
+	.site-header--overlay {
+		position: fixed;
+		left: 0;
+		right: 0;
+		background: transparent;
+		backdrop-filter: none;
+		border-bottom: none;
+	}
+
+	.header-inner {
+		max-width: 1120px;
+		margin: 0 auto;
+		padding: 1.1rem 1.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.25rem;
+	}
+
+	.brand {
+		text-decoration: none;
+		color: #1c1c1c;
+		font-family: 'Playfair Display', serif;
+		font-size: clamp(1.1rem, 2vw, 1.35rem);
+		letter-spacing: 0.03em;
+	}
+
+	.site-header--overlay .brand {
+		color: #ffffff;
+	}
+
+	.nav {
+		display: flex;
+		justify-content: flex-end;
+		gap: 2rem;
+	}
+
+	.nav a {
+		text-decoration: none;
+		font-size: 0.82rem;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: #222222;
+		font-family: 'Montserrat', 'Inter', sans-serif;
+		font-weight: 300;
+		transition: opacity 0.2s ease;
+	}
+
+	.site-header--overlay .nav a {
+		color: #ffffff;
+	}
+
+	.nav a:hover {
+		opacity: 0.72;
+	}
+
+	main {
+		width: 100%;
+	}
+
+	:global(h1),
+	:global(h2),
+	:global(h3) {
+		font-family: 'Playfair Display', serif;
+		font-weight: 500;
 	}
 </style>

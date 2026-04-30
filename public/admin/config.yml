@@ -1,0 +1,60 @@
+backend:
+  name: github
+  repo: your-github-username/your-repo-name
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "Accueil"
+        name: "homepage"
+        file: "src/content/homepage.json"
+        format: "json"
+        fields:
+          - { label: "Titre Hero", name: "heroTitle", widget: "string" }
+          - { label: "Texte bouton Hero", name: "heroButtonLabel", widget: "string" }
+          - { label: "Titre presentation", name: "presentationTitle", widget: "string" }
+          - label: "Paragraphes presentation"
+            name: "presentationParagraphs"
+            widget: "list"
+            field: { label: "Ligne", name: "line", widget: "string" }
+      - label: "Contact"
+        name: "contact_page"
+        file: "src/content/contact.json"
+        format: "json"
+        fields:
+          - { label: "Titre", name: "title", widget: "string" }
+          - { label: "Introduction", name: "intro", widget: "text" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Instagram", name: "instagram", widget: "string" }
+
+  - name: "portfolio"
+    label: "Portfolio"
+    folder: "src/content/portfolio"
+    create: true
+    slug: "{{slug}}"
+    format: "frontmatter"
+    extension: "md"
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Image", name: "image", widget: "image" }
+
+  - name: "prestations"
+    label: "Prestations"
+    file: "src/content/prestations.json"
+    format: "json"
+    fields:
+      - name: "items"
+        label: "Liste des prestations"
+        widget: "list"
+        fields:
+          - { label: "Nom", name: "name", widget: "string" }
+          - { label: "Prix de depart", name: "startingPrice", widget: "string" }
+          - label: "Points descriptifs"
+            name: "features"
+            widget: "list"
+            field: { label: "Point", name: "feature", widget: "string" }
