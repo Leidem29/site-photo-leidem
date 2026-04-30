@@ -45,16 +45,19 @@ collections:
 
   - name: "prestations"
     label: "Prestations"
-    file: "src/content/prestations.json"
-    format: "json"
-    fields:
-      - name: "items"
-        label: "Liste des prestations"
-        widget: "list"
+    files:
+      - label: "Prestations & Tarifs"
+        name: "prestations_data"
+        file: "src/content/prestations.json"
+        format: "json"
         fields:
-          - { label: "Nom", name: "name", widget: "string" }
-          - { label: "Prix de depart", name: "startingPrice", widget: "string" }
-          - label: "Points descriptifs"
-            name: "features"
+          - name: "items"
+            label: "Liste des prestations"
             widget: "list"
-            field: { label: "Point", name: "feature", widget: "string" }
+            fields:
+              - { label: "Nom", name: "name", widget: "string" }
+              - { label: "Prix de depart", name: "startingPrice", widget: "string" }
+              - label: "Points descriptifs"
+                name: "features"
+                widget: "list"
+                field: { label: "Point", name: "feature", widget: "string" }
